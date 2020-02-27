@@ -1,4 +1,11 @@
 defmodule Cards do
+  @moduledoc """
+    Test doc
+  """
+
+  @doc """
+    Returns deck
+  """
   def create_deck do
     values = ["Ace", "Two", "Three", "Four", "Five", "Six", "Seven"]
     suits = ["Spades", "Clubs", "Hearts", "Diamonds"]
@@ -12,13 +19,33 @@ defmodule Cards do
     Enum.shuffle(deck)
   end
 
+  @doc """
+    Check if card is present
+
+    ## Examples:
+
+      iex> deck = Cards.create_deck
+      iex> Cards.contains?(deck, "Ace of Spades")
+      true
+
+  """
   def contains?(deck, card) do
     Enum.member?(deck, card)
   end
 
+  @doc """
+    `hand_size` is the number of cards in the results together with the `deck` that left
+
+    ## Examples
+
+      iex> deck = Cards.create_deck
+      iex> {hand, deck} = Cards.deal(deck, 1)
+      iex> hand
+      ["Ace of Spades"]
+
+  """
   def deal(deck, hand_size) do
-    {hand, _} = Enum.split(deck, hand_size)
-    hand
+    Enum.split(deck, hand_size)
   end
 
   def save_deck(deck, file_name) do
@@ -33,7 +60,7 @@ defmodule Cards do
     case status do
       :ok -> :erlang.binary_to_term(content)
       :error -> "File is not exist"
-      _ -> "Other error"
+      # _ -> "Other error"
     end
 
     # Good approach
